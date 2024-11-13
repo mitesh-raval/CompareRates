@@ -1,20 +1,20 @@
 import streamlit as st
 
 
-def get_valid_input(prompt, min_value, max_value, value_type=float):
+def get_valid_input(prompt, min_value, max_value, value_type=float, key=None):
     value = st.number_input(
-        prompt, min_value=min_value, max_value=max_value, value=0.0, format="%.2f"
+        prompt, min_value=min_value, max_value=max_value, value=0.0, format="%.2f", key=key
     )
     return value
 
 
-def get_offer_details(offer_name):
+def get_offer_details(offer_name, offer_key):
     st.write(f"Please provide the following for {offer_name}:")
     supply_rate = get_valid_input(
-        "Enter Daily Supply rate (cents per day, 0-1000):", 0.0, 1000.0
+        "Enter Daily Supply rate (cents per day, 0-1000):", 0.0, 1000.0, key=f"supply_rate_{offer_key}"
     )
     usage_rate = get_valid_input(
-        "Enter General Usage rate (cents per kWh, 0-100):", 0.0, 100.0
+        "Enter General Usage rate (cents per kWh, 0-100):", 0.0, 100.0, key=f"usage_rate_{offer_key}"
     )
     return supply_rate, usage_rate
 
@@ -33,14 +33,15 @@ def main():
         max_value=10000.0,
         value=0.0,
         format="%.2f",
+        key="avg_usage",
     )
 
     supply_rate = []
     usage_rate = []
 
     # Collect details for Offer A and Offer B
-    for offer in ["Offer A", "Offer B"]:
-        s_rate, u_rate = get_offer_details(offer)
+    for idx, offer in enumerate(["Offer A", "Offer B"]):
+        s_rate, u_rate = get_offer_details(offer, offer_key=idx)
         supply_rate.append(s_rate)
         usage_rate.append(u_rate)
 
