@@ -42,9 +42,9 @@ def main():
     # Calculate total charges for each offer
     total_charges = [calculate_total_cost(supply_rate[i], usage_rate[i], avg_usage) for i in range(len(supply_rate))]
 
-    # Display results
-    print(f"Total charges for Offer A: ${round(total_charges[0], 2)}")
-    print(f"Total charges for Offer B: ${round(total_charges[1], 2)}")
+    # Display results with zero padding
+    print(f"Total charges for Offer A: ${total_charges[0]:.2f}")
+    print(f"Total charges for Offer B: ${total_charges[1]:.2f}")
 
 
 if __name__ == "__main__":
